@@ -16,10 +16,13 @@
                         usingDeck:(Deck *)deck;
 
 -(void) reset;
--(void) chooseCardAtIndex:(NSUInteger)index inMode:(int)matchMode;
+-(NSString *) chooseCardAtIndex:(NSUInteger)index inMode:(int)matchMode;
 -(Card *)cardAtIndex:(NSUInteger) index;
 
 @property (nonatomic, readonly) NSUInteger score;
-
+@property (strong) NSString *firstCard;
+@property (strong) NSString *secondCard;
+@property (strong) NSString *thirdCard;
+@property (strong) NSString *result;
 
 @end

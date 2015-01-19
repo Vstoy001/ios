@@ -12,6 +12,7 @@
 @property (nonatomic, readwrite) NSUInteger score;
 @property (nonatomic, strong) NSMutableArray *cards;
 @property BOOL secondPicked;
+@property Card *cardB;
 @end
 
 @implementation CardMatchingGame
@@ -27,6 +28,7 @@
     self = [super init];
     if(self)
     {
+        self.secondPicked = NO;
         for(int i = 0; i < count; i++)
         {
             Card *card = [deck drawRandomCard];
@@ -38,7 +40,6 @@
                 break;
             }
         }
-        self.secondPicked = NO;
     }
     return self;
 }
@@ -59,10 +60,9 @@ static const int MATCH_BONUS = 4;
 static const int COST_TO_CHOOSE = 1;
 //static Card *prevCard = [[Card alloc] initEmptyCard];
 
-- (void) chooseCardAtIndex:(NSUInteger)index inMode:(int)matchMode
+- (NSString *) chooseCardAtIndex:(NSUInteger)index inMode:(int)matchMode
 {
     Card *card = [self cardAtIndex:index];
-    Card *cardA = [self cardAtIndex:index];
     
     if(!card.isMatched)
     {
@@ -74,21 +74,19 @@ static const int COST_TO_CHOOSE = 1;
         {
             if(matchMode == 2)
             {
-                NSLog(@"going to matchTwo!");
                 [self matchTwo:card];
             }
             else if(matchMode == 3)
             {
-                NSLog(@"secondPicked is: %d", self.secondPicked);
                 if(!self.secondPicked)
                 {
-                    cardA = card;
+                    self.cardB = card;
+                    self.cardB.Chosen = YES;
                     self.secondPicked = YES;
                 }
                 else
                 {
-                    NSLog(@"going to matchThree!");
-                    [self matchThree:card :cardA];
+                    [self matchThree:card :self.cardB];
                     self.secondPicked = NO;
                 }
             }
@@ -96,6 +94,10 @@ static const int COST_TO_CHOOSE = 1;
             card.chosen = YES;
         }
     }
+    return [[[self.firstCard
+              stringByAppendingString:self.secondCard]
+              stringByAppendingString:self.thirdCard]
+              stringByAppendingString:self.result];
 }
 
 - (void) matchTwo:(Card *)card
@@ -105,14 +107,19 @@ static const int COST_TO_CHOOSE = 1;
         if(otherCard.isChosen && !otherCard.isMatched)
         {
             int matchScore = [card match:@[otherCard]];
+            self.firstCard = card.contents;
+            self.secondCard = otherCard.contents;
+            self.thirdCard = @"";
             if(matchScore)
             {
                 self.score += matchScore * MATCH_BONUS;
                 otherCard.matched = YES;
                 card.matched = YES;
+                self.result = [NSString stringWithFormat:@"is a match for %d points", matchScore];
             } else {
                 self.score -= MIS_MATCH_PENALTY;
                 otherCard.chosen = NO;
+                self.result = @"is a mismatch";
             }
             break;
         }
@@ -123,18 +130,25 @@ static const int COST_TO_CHOOSE = 1;
 {
     for(Card *otherCard in self.cards)
     {
-        if(otherCard.isChosen && !otherCard.isMatched)
+        if(otherCard.isChosen && !otherCard.isMatched && cardB.isChosen && ![cardB.contents isEqualToString: otherCard.contents])
         {
             int matchScore = [otherCard match:@[cardA, cardB]];
+            self.firstCard = cardA.contents;
+            self.secondCard = cardB.contents;
+            self.thirdCard = otherCard.contents;
             if(matchScore)
             {
                 self.score += matchScore * MATCH_BONUS;
                 otherCard.matched = YES;
                 cardA.matched = YES;
                 cardB.matched = YES;
+                self.result = [NSString stringWithFormat:@"is a match for %d points", matchScore];
             } else {
                 self.score -= MIS_MATCH_PENALTY;
                 otherCard.chosen = NO;
+                cardA.chosen = NO;
+                self.secondPicked = NO;
+                self.result = @"is a mismatch";
             }
             break;
         }

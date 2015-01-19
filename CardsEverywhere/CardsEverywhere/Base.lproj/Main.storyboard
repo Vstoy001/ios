@@ -188,7 +188,7 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Sfh-OX-8he">
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" translatesAutoresizingMaskIntoConstraints="NO" id="Sfh-OX-8he">
                                 <rect key="frame" x="164" y="474" width="140" height="29"/>
                                 <segments>
                                     <segment title="Two"/>
@@ -199,6 +199,12 @@
                                     <action selector="matchToggle:" destination="BYZ-38-t0r" eventType="valueChanged" id="zMo-bk-emx"/>
                                 </connections>
                             </segmentedControl>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iP3-Bi-hfF">
+                                <rect key="frame" x="16" y="445" width="288" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kpr-bf-SPj">
                                 <rect key="frame" x="217" y="529" width="102" height="38"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
@@ -214,7 +220,9 @@
                         <color key="backgroundColor" red="0.026128721827352784" green="0.62880760732323226" blue="0.23951173316718485" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <connections>
+                        <outlet property="actionTaken" destination="iP3-Bi-hfF" id="QFz-He-PN8"/>
                         <outlet property="flipsLabel" destination="tqW-ic-TVs" id="iTU-J6-hwz"/>
+                        <outlet property="matchSetting" destination="Sfh-OX-8he" id="fle-KD-04D"/>
                         <outlet property="scoreLabel" destination="pbk-rX-An6" id="eRx-mj-sPF"/>
                         <outletCollection property="cardButtons" destination="j9P-q1-CsU" id="wlf-4P-7nV"/>
                         <outletCollection property="cardButtons" destination="Lv9-q9-24e" id="Xk5-1a-zE3"/>

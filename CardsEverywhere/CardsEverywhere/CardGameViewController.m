@@ -16,7 +16,6 @@
     {
         _game = [[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count]
                                                          usingDeck:[self createDeck]];
-        self.matchMode = 2;
     }
     return _game;
 }
@@ -35,7 +34,8 @@
 - (IBAction) touchCardButton:(UIButton *)sender
 {
     int choseButtonIndex = [self.cardButtons indexOfObject:sender];
-    [self.game chooseCardAtIndex:choseButtonIndex inMode:_matchMode];
+    self.result = [self.game chooseCardAtIndex:choseButtonIndex inMode:_matchMode];
+    [[self actionTaken] setText:@"picked: "];
     [self updateUI];
     self.flipsCount++;
 }
@@ -50,6 +50,7 @@
         [cardButton setBackgroundImage:[self backgroundForCard:card] forState:UIControlStateNormal];
         cardButton.enabled = !card.isMatched;
         self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
+        self.actionTaken.text = _result;
     }
 }
 
@@ -66,9 +67,11 @@
 - (IBAction)resetButton:(UIButton *)sender
 {
     self.flipsCount = 0;
+    self.result = @"";
     [self.game reset];
     self.game = nil;
-    //[[self matchToggle] set]
+    [[self matchSetting] setSelectedSegmentIndex:0];
+    self.matchMode = 2;
     [self updateUI];
 }
 

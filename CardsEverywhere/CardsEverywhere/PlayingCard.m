@@ -20,7 +20,9 @@
         if(otherCard.rank == self.rank)
         {
             score = 4;
-        } else if([otherCard.suit isEqualToString:self.suit]) {
+        }
+        else if([otherCard.suit isEqualToString:self.suit])
+        {
             score = 1;
         }
     }
@@ -32,7 +34,9 @@
             if([otherCards[0] rank] == [otherCards[i] rank])
             {
                 score += 4;
-            } else if([[otherCards[0] suit] isEqualToString:[otherCards[i] suit]]) {
+            }
+            if([[otherCards[0] suit] isEqualToString:[otherCards[i] suit]])
+            {
                 score += 1;
             }
         }
@@ -43,7 +47,9 @@
             if(otherCard.rank == self.rank)
             {
                 score += 4;
-            } else if ([otherCard.suit isEqualToString:self.suit]) {
+            }
+            if ([otherCard.suit isEqualToString:self.suit])
+            {
                 score += 1;
             }
         }
