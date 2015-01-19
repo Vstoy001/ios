@@ -79,7 +79,9 @@
 -(void) closeScreen
 {
     [self.loadingView removeFromSuperview];
+    
     [self changeState: PLAY];
+    
     [self.enemies startTimer];
     self.collisionTimer = [NSTimer scheduledTimerWithTimeInterval:.1
                                    target:self
