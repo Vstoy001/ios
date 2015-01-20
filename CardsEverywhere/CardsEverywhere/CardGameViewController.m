@@ -7,6 +7,23 @@
 //
 
 #import "CardGameViewController.h"
+#import "CardMatchingGame.h"
+
+@interface CardGameViewController()
+
+@property (strong, nonatomic) IBOutlet UILabel *flipsLabel;
+@property (strong, nonatomic) IBOutlet UILabel *scoreLabel;
+@property (strong, nonatomic) IBOutlet UISegmentedControl *matchSetting;
+
+@property (nonatomic) int flipsCount;
+@property (nonatomic) int matchMode;
+@property (strong) NSString *result;
+@property (strong, nonatomic) IBOutlet UILabel *actionTaken;
+
+@property (strong, nonatomic) CardMatchingGame *game;
+@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
+
+@end
 
 @implementation CardGameViewController
 
@@ -15,14 +32,14 @@
     if(!_game)
     {
         _game = [[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count]
-                                                         usingDeck:[self createDeck]];
+                                                  usingDeck:[self createDeck]];
     }
     return _game;
 }
 
 -(Deck *) createDeck
 {
-    return [[PlayingCardDeck alloc] init];
+    return nil;//[[PlayingCardDeck alloc] init];
 }
 
 -(void) setFlipsCount:(int)flipsCount
