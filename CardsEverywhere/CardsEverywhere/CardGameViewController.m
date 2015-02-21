@@ -7,21 +7,10 @@
 //
 
 #import "CardGameViewController.h"
-#import "CardMatchingGame.h"
 
 @interface CardGameViewController()
 
-@property (strong, nonatomic) IBOutlet UILabel *flipsLabel;
-@property (strong, nonatomic) IBOutlet UILabel *scoreLabel;
-@property (strong, nonatomic) IBOutlet UISegmentedControl *matchSetting;
 
-@property (nonatomic) int flipsCount;
-@property (nonatomic) int matchMode;
-@property (strong) NSString *result;
-@property (strong, nonatomic) IBOutlet UILabel *actionTaken;
-
-@property (strong, nonatomic) CardMatchingGame *game;
-@property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
 
 @end
 
@@ -51,7 +40,7 @@
 - (IBAction) touchCardButton:(UIButton *)sender
 {
     int choseButtonIndex = [self.cardButtons indexOfObject:sender];
-    self.result = [self.game chooseCardAtIndex:choseButtonIndex inMode:_matchMode];
+    self.result = [self.game chooseCardAtIndex:choseButtonIndex inMode:2];
     [[self actionTaken] setText:@"picked: "];
     [self updateUI];
     self.flipsCount++;
@@ -68,6 +57,15 @@
         cardButton.enabled = !card.isMatched;
         self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.game.score];
         self.actionTaken.text = _result;
+    }
+    
+    for(UIButton *setButton in self.setButtons)
+    {
+        int setButtonIndex = [self.setButtons indexOfObject:setButton];
+        Card *card = [self.game cardAtIndex:setButtonIndex];
+        [setButton setTitle:[self titleForCard:card] forState:UIControlStateNormal];
+        [setButton setBackgroundImage:[self backgroundForCard:card] forState:UIControlStateNormal];
+        setButton.enabled = !card.isMatched;
     }
 }
 
@@ -87,23 +85,7 @@
     self.result = @"";
     [self.game reset];
     self.game = nil;
-    [[self matchSetting] setSelectedSegmentIndex:0];
-    self.matchMode = 2;
     [self updateUI];
 }
 
-- (IBAction)matchToggle:(UISegmentedControl *)sender
-{
-    
-    int mode = [sender selectedSegmentIndex];
-    if(mode == 0)
-    {
-        self.matchMode = 2;
-    }
-    else
-    {
-        self.matchMode = 3;
-    }
-    
-}
 @end

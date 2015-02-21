@@ -1,0 +1,6 @@
+framework module S1Msg {
+  umbrella header "S1Msg.h"
+
+  export *
+  module * { export * }
+}
